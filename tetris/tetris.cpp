@@ -2,9 +2,17 @@
 using namespace std;
 
 wstring tetromino[7];
+//playing field dimentions : from GameBoy
 int nFieldWidth = 12;
 int nFieldHeight = 18;
-unsigned char* pField = nullptr;
+
+// not statically allocated --> allocate dynamically 
+unsigned char* pField = nullptr; 
+// unsigned char : 0-> empty space; 9 have walls info
+
+// console screen 
+int nScreenWidth = 80; // screen size X -- columns
+int nScreenHeight = 30; // screen size Y -- rows
 
 int Rotate(int px, int py, int r) {
 
@@ -68,8 +76,32 @@ int main() {
 	tetromino[6].append(L".XX.");
 	tetromino[6].append(L".X..");
 	tetromino[6].append(L".X..");
+	
+	// create play field 
+	pField = new unsigned char[nFieldHeight * nFieldWidth];
+	for (int x = 0; x < nFieldWidth; x++) {// border boundry
+		for (int y = 0; y < nFieldHeight; y++) {
+			pField[y * nFieldWidth + x] = (x == 0 || x == nFieldWidth - 1 || y == nFieldHeight - 1) ? 9 : 0;
+		}
+	}
+	wchar_t* screen = new wchar_t[nScreenWidth * nScreenHeight];
+	for (int i = 0; i < nScreenWidth * nScreenHeight; i++) screen[i] = L' ';
+	HANDLE hConsole = CreateConsoleScreenBuffer(GENERIC_READ | GENERIC_WRITE, 0, NULL, CONSOLE_TEXTMODE_BUFFER, NULL);
+	SetConsileActiveScreenBuffer(hConsole);
+	DWORD dwBytesWritten = 0;
 
 	
-	
+	bool bGameOver = false;
+	while (!bGameOver)
+	{
+
+
+		// //Display Frame: use hConsole --> draw screen --> dim width*height --> start from 0,0 --> 
+		WriteConsoleOutputCharacter(hConsole, screen, nScreenWidth * nScreenHeight, { 0.0 }, &dwBytesWritten);
+
+	}
+
+
+
 	return 0;
 }
