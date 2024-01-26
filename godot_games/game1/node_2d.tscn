@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://cmql4daq6842n"]
+
+[ext_resource type="Script" path="res://Node2D.gd" id="1_qoj73"]
+
+[node name="Node2D" type="Node2D"]
+visible = false
+position = Vector2(71, -10)
+script = ExtResource("1_qoj73")
